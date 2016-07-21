@@ -9,7 +9,7 @@ namespace SqrootCompExtended
     /// <summary>
     /// Class to compute the square root of a given number using Heron's method.
     /// </summary>
-    class HeronSqroot 
+    class MySquare:ISquare 
     {
         /// <summary>
         /// The input number for which square root needs to be computed.
@@ -19,7 +19,8 @@ namespace SqrootCompExtended
         /// <summary>
         /// The allowed margin of error in square root computation.
         /// </summary>
-        double marginOfError;
+       private double marginOfError;
+       double ISquare.errorMargin { get { return marginOfError; } }
 
 
         /// <summary>
@@ -27,17 +28,23 @@ namespace SqrootCompExtended
         /// </summary>
         public double sqRootResult { get; private set; }
 
-        public HeronSqroot(double num, double error)
+        public MySquare(double num, double error):this(error)
         {
             this.someNumber = num;
-            this.marginOfError = error * 1;
+          //  this.marginOfError = error * 1;
         }
+
+        public MySquare(double error)
+        {
+            this.marginOfError = error;
+        }
+
 
         /// <summary>
         /// Function to perform actual square root computation using Heron's method for positive numbers.
         /// In case of negative numbers, validate and raise an error.
         /// </summary>
-        public void computeSqroot()
+        double ISquare.Sqrt()
         {
 
             if (this.someNumber < 0)
@@ -50,7 +57,7 @@ namespace SqrootCompExtended
             if (this.someNumber == 0)
             {
                 this.sqRootResult = 0;
-                return;
+                return this.sqRootResult;
             }
 
             if (this.someNumber < 10)
@@ -87,6 +94,8 @@ namespace SqrootCompExtended
                 guessNum = (guessNum + (this.someNumber / guessNum)) / 2;
 
             }
+
+            return this.sqRootResult;
 
         }
 

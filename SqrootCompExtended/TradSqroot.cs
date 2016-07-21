@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace SqrootCompExtended
 {
-    class TradSqroot 
+    class TradSqroot:ISquare 
     {
         /// <summary>
         /// Number for which square root needs to be computed.
         /// </summary>
         double number;
+
+        private double marginOfError = 4e-10;
+
+        double ISquare.errorMargin {
+            get {return marginOfError;}
+        }
 
         /// <summary>
         /// The output after square root computation
@@ -31,7 +37,7 @@ namespace SqrootCompExtended
         /// Method to perform square root computation using Math library for positive numbers.
         /// In case of negative numbers, validate the input and raise an error.
         /// </summary>
-        public void computeSqroot()
+        double ISquare.Sqrt()
         {
             try
             {
@@ -41,13 +47,15 @@ namespace SqrootCompExtended
                 }
 
                 this.sqrootNum = Math.Sqrt(this.number);
+                
 
             }
             catch (ArgumentException ae)
             {
                 Console.WriteLine(ae.ParamName);
+                this.sqrootNum = 0;
             }
-
+            return this.sqrootNum;
         }
     }
 }

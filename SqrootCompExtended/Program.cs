@@ -14,17 +14,19 @@ namespace SqrootCompExtended
             try
             {
 
-                double acceptableError = 0.0001;
+                ISquare ts = new TradSqroot(number);
+                double acceptableError = ts.errorMargin;
+                ISquare hs = new MySquare(number, acceptableError);
+                
+                double heronSqrt=hs.Sqrt();
+                double tradSqrt=ts.Sqrt();
+                Console.WriteLine("Heron Squareroot: " + heronSqrt);
+                Console.WriteLine("Traditional Squareroot: " + tradSqrt);
 
-                HeronSqroot hs = new HeronSqroot(number, acceptableError);
-                TradSqroot ts = new TradSqroot(number);
-                hs.computeSqroot();
-                ts.computeSqroot();
-                Console.WriteLine("Heron Squareroot: " + hs.sqRootResult);
-                Console.WriteLine("Traditional Squareroot: " + ts.sqrootNum);
-
-                double degError = Math.Abs(hs.sqRootResult - ts.sqrootNum);
+                double degError = Math.Abs(heronSqrt - tradSqrt);
                 Console.WriteLine("Degree of Error: " + degError);
+
+                
 
                 if (degError <= acceptableError)
                 {
